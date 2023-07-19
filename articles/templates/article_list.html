@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Article List</h2>
+    <div class="row">
+        {% for article in articles %}
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-body" style="height: 200px;">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">{{ article.content|truncatechars:150 }}</p>
+                        <div class="card-footer text-right">
+                            <small class="text-muted">Created at: {{ article.created_at }}</small>
+                            <br>
+                            <small class="text-muted">Author: {{ article.author }}</small>
+                            <br>
+                            <form action="{% url 'article_delete' article.pk %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
